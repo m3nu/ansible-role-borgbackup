@@ -11,6 +11,13 @@ Works great with [BorgBase.com](https://www.borgbase.com) - Simple and Secure Ho
 - Set up Borgmatic config
 - Schedule regular backups using Cron or Systemd timer
 
+## Breaking changes
+- Older versions of this role set up a separate Cron job for creating and checking
+  backups. With recent Borgmatic version, this feature is now managed in Borgmatic.
+  As a result the extra Cron job will be removed by this role.
+- Older versions of this role only supported Cron for scheduling. If you use
+  Systemd timers, be sure to remove the Cron job in `/etc/cron.d/borgmatic` first.
+  The role will also alert you when trying to use both timers.
 
 ## Example playbook with root as backup user and Cron timer
 
@@ -41,8 +48,6 @@ Works great with [BorgBase.com](https://www.borgbase.com) - Simple and Secure Ho
 ```
 
 ## Example playbook with service user and Systemd timer
-**Attention**: If you used an older version of this role, be sure to remove any
-leftover cron jobs before using Systemd timers.
 
 ```
 - hosts: all
